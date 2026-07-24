@@ -1,0 +1,589 @@
+{
+  "volume_conservation": [
+    {
+      "P": -2.0,
+      "s_mm": -1.1387,
+      "tc_mm": 1.4332,
+      "dV_pct": 0.0,
+      "tc_ok": true
+    },
+    {
+      "P": -1.75,
+      "s_mm": -0.9959,
+      "tc_mm": 1.5044,
+      "dV_pct": 0.0,
+      "tc_ok": true
+    },
+    {
+      "P": -1.5,
+      "s_mm": -0.8533,
+      "tc_mm": 1.5757,
+      "dV_pct": 0.0,
+      "tc_ok": true
+    },
+    {
+      "P": -1.25,
+      "s_mm": -0.7108,
+      "tc_mm": 1.6468,
+      "dV_pct": 0.0,
+      "tc_ok": true
+    },
+    {
+      "P": -1.0,
+      "s_mm": -0.5685,
+      "tc_mm": 1.7179,
+      "dV_pct": 0.0,
+      "tc_ok": true
+    },
+    {
+      "P": -0.75,
+      "s_mm": -0.4263,
+      "tc_mm": 1.789,
+      "dV_pct": 0.0,
+      "tc_ok": true
+    },
+    {
+      "P": -0.5,
+      "s_mm": -0.2841,
+      "tc_mm": 1.8601,
+      "dV_pct": 0.0,
+      "tc_ok": true
+    },
+    {
+      "P": -0.25,
+      "s_mm": -0.1421,
+      "tc_mm": 1.9311,
+      "dV_pct": 0.0,
+      "tc_ok": true
+    },
+    {
+      "P": 0.0,
+      "s_mm": 2.0,
+      "tc_mm": 3.0,
+      "dV_pct": 0.0,
+      "tc_ok": true
+    },
+    {
+      "P": 0.25,
+      "s_mm": 0.1421,
+      "tc_mm": 2.0732,
+      "dV_pct": 0.0,
+      "tc_ok": true
+    },
+    {
+      "P": 0.5,
+      "s_mm": 0.2841,
+      "tc_mm": 2.1442,
+      "dV_pct": 0.0,
+      "tc_ok": true
+    },
+    {
+      "P": 0.75,
+      "s_mm": 0.4263,
+      "tc_mm": 2.2152,
+      "dV_pct": 0.0,
+      "tc_ok": true
+    },
+    {
+      "P": 1.0,
+      "s_mm": 0.5685,
+      "tc_mm": 2.2863,
+      "dV_pct": 0.0,
+      "tc_ok": true
+    },
+    {
+      "P": 1.25,
+      "s_mm": 0.7108,
+      "tc_mm": 2.3574,
+      "dV_pct": 0.0,
+      "tc_ok": true
+    },
+    {
+      "P": 1.5,
+      "s_mm": 0.8533,
+      "tc_mm": 2.4286,
+      "dV_pct": 0.0,
+      "tc_ok": true
+    },
+    {
+      "P": 1.75,
+      "s_mm": 0.9959,
+      "tc_mm": 2.4998,
+      "dV_pct": 0.0,
+      "tc_ok": true
+    },
+    {
+      "P": 2.0,
+      "s_mm": 1.1387,
+      "tc_mm": 2.5711,
+      "dV_pct": 0.0,
+      "tc_ok": true
+    },
+    {
+      "P": 2.25,
+      "s_mm": 1.2818,
+      "tc_mm": 2.6425,
+      "dV_pct": 0.0,
+      "tc_ok": true
+    },
+    {
+      "P": 2.5,
+      "s_mm": 1.4251,
+      "tc_mm": 2.7139,
+      "dV_pct": 0.0,
+      "tc_ok": true
+    },
+    {
+      "P": 2.75,
+      "s_mm": 1.5687,
+      "tc_mm": 2.7854,
+      "dV_pct": 0.0,
+      "tc_ok": true
+    },
+    {
+      "P": 3.0,
+      "s_mm": 1.7125,
+      "tc_mm": 2.8571,
+      "dV_pct": 0.0,
+      "tc_ok": true
+    },
+    {
+      "P": 3.25,
+      "s_mm": 1.8568,
+      "tc_mm": 2.9288,
+      "dV_pct": 0.0,
+      "tc_ok": true
+    },
+    {
+      "P": 3.5,
+      "s_mm": 2.0014,
+      "tc_mm": 3.0007,
+      "dV_pct": 0.0,
+      "tc_ok": true
+    },
+    {
+      "P": 3.75,
+      "s_mm": 2.1464,
+      "tc_mm": 3.0727,
+      "dV_pct": 0.0,
+      "tc_ok": true
+    },
+    {
+      "P": 4.0,
+      "s_mm": 2.2918,
+      "tc_mm": 3.1448,
+      "dV_pct": 0.0,
+      "tc_ok": true
+    }
+  ],
+  "astigmatism": [
+    {
+      "rx": "S+2.00C-0.75x90",
+      "R_flat_mm": 275.0,
+      "R_steep_mm": 200.0,
+      "s_flat_mm": 1.1387,
+      "s_steep_mm": 1.5687,
+      "delta_s_mm": 0.42993,
+      "screw_ratio": 0.375,
+      "sf_flat": 1.45,
+      "sf_steep": 2.9,
+      "achievable": true,
+      "cross_coupling_D": 0.0
+    },
+    {
+      "rx": "S+1.50C-1.25x45",
+      "R_flat_mm": 366.67,
+      "R_steep_mm": 200.0,
+      "s_flat_mm": 0.8533,
+      "s_steep_mm": 1.5687,
+      "delta_s_mm": 0.71539,
+      "screw_ratio": 0.833,
+      "sf_flat": 1.09,
+      "sf_steep": 2.9,
+      "achievable": true,
+      "cross_coupling_D": 0.0
+    },
+    {
+      "rx": "S+2.50C-1.50x30",
+      "R_flat_mm": 220.0,
+      "R_steep_mm": 137.5,
+      "s_flat_mm": 1.4251,
+      "s_steep_mm": 2.2918,
+      "delta_s_mm": 0.86676,
+      "screw_ratio": 0.6,
+      "sf_flat": 2.17,
+      "sf_steep": 4.28,
+      "achievable": true,
+      "cross_coupling_D": 0.0
+    },
+    {
+      "rx": "S+1.00C-2.00x0",
+      "R_flat_mm": 550.0,
+      "R_steep_mm": 183.33,
+      "s_flat_mm": 0.5685,
+      "s_steep_mm": 1.7125,
+      "delta_s_mm": 1.14407,
+      "screw_ratio": 2.0,
+      "sf_flat": 0.87,
+      "sf_steep": 4.35,
+      "achievable": false,
+      "cross_coupling_D": 0.0
+    },
+    {
+      "rx": "S+3.00C-0.50x180",
+      "R_flat_mm": 183.33,
+      "R_steep_mm": 157.14,
+      "s_flat_mm": 1.7125,
+      "s_steep_mm": 2.0014,
+      "delta_s_mm": 0.28884,
+      "screw_ratio": 0.167,
+      "sf_flat": 4.35,
+      "sf_steep": 99,
+      "achievable": true,
+      "cross_coupling_D": 0.0
+    }
+  ],
+  "aberrations": [
+    {
+      "P_D": 1.5,
+      "q_Pa": -1144899.7,
+      "delta_sag_um": -1146.734,
+      "max_dev_nm": 630703.95,
+      "RMS_OPD_nm": 387793.39,
+      "power_error_mD": 0.0,
+      "ISO_8980_pass": true,
+      "spectacle_grade": false,
+      "note": "Significant Z11 spherical aberration; power accuracy still ISO-compliant"
+    },
+    {
+      "P_D": 1.75,
+      "q_Pa": -1002497.4,
+      "delta_sag_um": -1004.104,
+      "max_dev_nm": 552257.17,
+      "RMS_OPD_nm": 339564.15,
+      "power_error_mD": 0.0,
+      "ISO_8980_pass": true,
+      "spectacle_grade": false,
+      "note": "Significant Z11 spherical aberration; power accuracy still ISO-compliant"
+    },
+    {
+      "P_D": 2.0,
+      "q_Pa": -859900.7,
+      "delta_sag_um": -861.279,
+      "max_dev_nm": 473703.31,
+      "RMS_OPD_nm": 291267.91,
+      "power_error_mD": 0.0,
+      "ISO_8980_pass": true,
+      "spectacle_grade": false,
+      "note": "Significant Z11 spherical aberration; power accuracy still ISO-compliant"
+    },
+    {
+      "P_D": 2.25,
+      "q_Pa": -717081.2,
+      "delta_sag_um": -718.23,
+      "max_dev_nm": 395026.7,
+      "RMS_OPD_nm": 242894.98,
+      "power_error_mD": 0.0,
+      "ISO_8980_pass": true,
+      "spectacle_grade": false,
+      "note": "Significant Z11 spherical aberration; power accuracy still ISO-compliant"
+    },
+    {
+      "P_D": 2.5,
+      "q_Pa": -574010.1,
+      "delta_sag_um": -574.93,
+      "max_dev_nm": 316211.47,
+      "RMS_OPD_nm": 194435.56,
+      "power_error_mD": 0.0,
+      "ISO_8980_pass": true,
+      "spectacle_grade": false,
+      "note": "Significant Z11 spherical aberration; power accuracy still ISO-compliant"
+    },
+    {
+      "P_D": 2.75,
+      "q_Pa": -430658.2,
+      "delta_sag_um": -431.348,
+      "max_dev_nm": 237241.58,
+      "RMS_OPD_nm": 145879.75,
+      "power_error_mD": 0.0,
+      "ISO_8980_pass": true,
+      "spectacle_grade": false,
+      "note": "Significant Z11 spherical aberration; power accuracy still ISO-compliant"
+    },
+    {
+      "P_D": 3.0,
+      "q_Pa": -286996.1,
+      "delta_sag_um": -287.456,
+      "max_dev_nm": 158100.79,
+      "RMS_OPD_nm": 97217.51,
+      "power_error_mD": 0.0,
+      "ISO_8980_pass": true,
+      "spectacle_grade": false,
+      "note": "Significant Z11 spherical aberration; power accuracy still ISO-compliant"
+    },
+    {
+      "P_D": 3.25,
+      "q_Pa": -142993.8,
+      "delta_sag_um": -143.223,
+      "max_dev_nm": 78772.62,
+      "RMS_OPD_nm": 48438.66,
+      "power_error_mD": 0.0,
+      "ISO_8980_pass": true,
+      "spectacle_grade": false,
+      "note": "Significant Z11 spherical aberration; power accuracy still ISO-compliant"
+    },
+    {
+      "P_D": 3.5,
+      "q_Pa": 1379.0,
+      "delta_sag_um": 1.381,
+      "max_dev_nm": 759.67,
+      "RMS_OPD_nm": 467.15,
+      "power_error_mD": 0.0,
+      "ISO_8980_pass": true,
+      "spectacle_grade": true,
+      "note": "Near baseline \u2014 minimal aberration"
+    },
+    {
+      "P_D": 3.75,
+      "q_Pa": 146153.2,
+      "delta_sag_um": 146.387,
+      "max_dev_nm": 80513.09,
+      "RMS_OPD_nm": 49510.4,
+      "power_error_mD": 0.0,
+      "ISO_8980_pass": true,
+      "spectacle_grade": false,
+      "note": "Significant Z11 spherical aberration; power accuracy still ISO-compliant"
+    },
+    {
+      "P_D": 4.0,
+      "q_Pa": 291360.2,
+      "delta_sag_um": 291.827,
+      "max_dev_nm": 160504.94,
+      "RMS_OPD_nm": 98701.82,
+      "power_error_mD": 0.0,
+      "ISO_8980_pass": true,
+      "spectacle_grade": false,
+      "note": "Significant Z11 spherical aberration; power accuracy still ISO-compliant"
+    }
+  ],
+  "sensitivity_thermal": [
+    {
+      "dT_C": 1,
+      "unintended_cyl_D": 0.16542,
+      "within_0.25D": false
+    },
+    {
+      "dT_C": 2,
+      "unintended_cyl_D": 0.17711,
+      "within_0.25D": false
+    },
+    {
+      "dT_C": 3,
+      "unintended_cyl_D": 0.18138,
+      "within_0.25D": false
+    },
+    {
+      "dT_C": 5,
+      "unintended_cyl_D": 0.18495,
+      "within_0.25D": false
+    },
+    {
+      "dT_C": 8,
+      "unintended_cyl_D": 0.18702,
+      "within_0.25D": false
+    },
+    {
+      "dT_C": 10,
+      "unintended_cyl_D": 0.18772,
+      "within_0.25D": false
+    },
+    {
+      "dT_C": 15,
+      "unintended_cyl_D": 0.18819,
+      "within_0.25D": false
+    },
+    {
+      "dT_C": 20,
+      "unintended_cyl_D": 0.18819,
+      "within_0.25D": false
+    }
+  ],
+  "sensitivity_screw": [
+    {
+      "offset_mm": -0.5,
+      "P_D": 3.64336,
+      "dP_D": 0.14336,
+      "ok": false
+    },
+    {
+      "offset_mm": -0.25,
+      "P_D": 3.5706,
+      "dP_D": 0.0706,
+      "ok": true
+    },
+    {
+      "offset_mm": 0,
+      "P_D": 3.5,
+      "dP_D": 0.0,
+      "ok": true
+    },
+    {
+      "offset_mm": 0.25,
+      "P_D": 3.43147,
+      "dP_D": 0.06853,
+      "ok": true
+    },
+    {
+      "offset_mm": 0.5,
+      "P_D": 3.36492,
+      "dP_D": 0.13508,
+      "ok": false
+    },
+    {
+      "offset_mm": 1.0,
+      "P_D": 3.2375,
+      "dP_D": 0.2625,
+      "ok": false
+    }
+  ],
+  "sensitivity_material": [
+    {
+      "E_var_pct": -5,
+      "E_GPa": 2.1612,
+      "P_D": 3.5,
+      "dP_D": 0.0,
+      "ok": true
+    },
+    {
+      "E_var_pct": -3,
+      "E_GPa": 2.2067,
+      "P_D": 3.5,
+      "dP_D": 0.0,
+      "ok": true
+    },
+    {
+      "E_var_pct": -1,
+      "E_GPa": 2.2523,
+      "P_D": 3.5,
+      "dP_D": 0.0,
+      "ok": true
+    },
+    {
+      "E_var_pct": 0,
+      "E_GPa": 2.275,
+      "P_D": 3.5,
+      "dP_D": 0.0,
+      "ok": true
+    },
+    {
+      "E_var_pct": 1,
+      "E_GPa": 2.2978,
+      "P_D": 3.5,
+      "dP_D": 0.0,
+      "ok": true
+    },
+    {
+      "E_var_pct": 3,
+      "E_GPa": 2.3432,
+      "P_D": 3.5,
+      "dP_D": 0.0,
+      "ok": true
+    },
+    {
+      "E_var_pct": 5,
+      "E_GPa": 2.3887,
+      "P_D": 3.5,
+      "dP_D": 0.0,
+      "ok": true
+    }
+  ],
+  "smp_specs": {
+    "tg": {
+      "target_C": 72,
+      "min_C": 68,
+      "reshape_C": 84,
+      "ambient_safety_margin_C": 12,
+      "body_safety_margin_C": 35,
+      "rationale": "Exceeds 60\u00b0C car-interior by 12\u00b0C, safe at body temp (37\u00b0C)"
+    },
+    "thickness": {
+      "analysis": [
+        {
+          "h_mm": 1.5,
+          "D_Nm": 0.7617,
+          "sf_at_4D": 34.27,
+          "sf_at_2D": 11.61,
+          "tc_min_mm": 1.071,
+          "feasible": true
+        },
+        {
+          "h_mm": 2.0,
+          "D_Nm": 1.8056,
+          "sf_at_4D": 14.46,
+          "sf_at_2D": 4.9,
+          "tc_min_mm": 1.571,
+          "feasible": true
+        },
+        {
+          "h_mm": 2.5,
+          "D_Nm": 3.5265,
+          "sf_at_4D": 7.4,
+          "sf_at_2D": 2.51,
+          "tc_min_mm": 2.071,
+          "feasible": true
+        },
+        {
+          "h_mm": 3.0,
+          "D_Nm": 6.0938,
+          "sf_at_4D": 4.28,
+          "sf_at_2D": 1.45,
+          "tc_min_mm": 2.571,
+          "feasible": true
+        },
+        {
+          "h_mm": 4.0,
+          "D_Nm": 14.4444,
+          "sf_at_4D": 1.81,
+          "sf_at_2D": 0.61,
+          "tc_min_mm": 3.571,
+          "feasible": false
+        }
+      ],
+      "optimal_mm": 1.5,
+      "rationale": "Thinnest feasible: min force, stays above 0.5mm at all Rx"
+    },
+    "reshape": {
+      "heat_time_s": 1.9,
+      "hold_time_s": 20,
+      "cool_time_s": 3.8,
+      "total_min": 0.4,
+      "method": "Hot water bath 85\u00b0C or silicone pad at 85\u00b0C"
+    },
+    "shape_retention": {
+      "creep_sag_um": 0.011049,
+      "power_drift_mD": 0.019076,
+      "note": "Negligible \u2014 glassy SMP creep << 0.01 mD/year"
+    },
+    "optical": {
+      "n": 1.55,
+      "abbe_est": 37,
+      "transmission_pct": 92,
+      "haze_pct": 0.5,
+      "UV_cutoff_nm": 380
+    },
+    "mechanical": {
+      "yield_MPa": 65,
+      "E_GPa": 2.275,
+      "scratch_HV": 15,
+      "needs_hardcoat": true,
+      "needs_AR": true,
+      "note": "Hardcoat required; rim frame protects edge"
+    },
+    "aberrations_summary": {
+      "plate_profile": "Kirchhoff (1-r\u00b2/a\u00b2)\u00b2 is quartic \u2014 introduces Z11 spherical aberration",
+      "power_accuracy": "<0.001D power error across range \u2014 ISO 8980-1 compliant",
+      "Z11_note": "Spherical aberration RMS increases with |\u0394Sagitta|; near-baseline prescriptions are spectacle-grade",
+      "recommendation": "Anti-aberration correction: use rim-force profile tuned to produce more spherical deflection"
+    }
+  }
+}
