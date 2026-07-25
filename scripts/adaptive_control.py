@@ -1,14 +1,3 @@
-"""
-AdaptivEyes — Option 2: Closed-Loop Adaptive Control & Longitudinal Simulation
-==============================================================================
-Simulates a patient wearing AdaptivEyes over 20 years.
-- Myopia progression model (Brien Holden Institute data)
-- Automatic prescription drift detection
-- Screw adjustment plan computed each adjustment
-- Cumulative fatigue tracking
-- Cost comparison vs traditional glasses
-- Population-scale impact (1 billion people)
-"""
 import numpy as np
 import matplotlib; matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -26,11 +15,6 @@ def P_to_sag(P):
     return float(np.sign(P)*(R-np.sqrt(d))) if d>0 else None
 
 def myopia_progression(age_start, P_start, n_years=20, noise_std=0.08):
-    """
-    Based on Brien Holden Vision Institute global myopia model.
-    Progression rate: ~0.5D/year ages 8-14, ~0.25D/year 14-18, ~0.1D/year 18+
-    Stabilizes around age 25.
-    """
     np.random.seed(42)
     ages = np.arange(age_start, age_start+n_years+1)
     P = [P_start]
@@ -39,7 +23,6 @@ def myopia_progression(age_start, P_start, n_years=20, noise_std=0.08):
         elif age < 18: rate = -0.30
         elif age < 25: rate = -0.12
         else:          rate = -0.03
-
         delta = rate + np.random.normal(0, noise_std)
         new_P = P[-1] + delta
         new_P = round(new_P / 0.25) * 0.25
@@ -47,7 +30,6 @@ def myopia_progression(age_start, P_start, n_years=20, noise_std=0.08):
     return ages, np.array(P)
 
 def needs_adjustment(P_current, P_worn, threshold=0.25):
-    """Trigger adjustment when drift exceeds one clinical step."""
     return abs(P_current - P_worn) >= threshold
 
 def compute_adjustment(P_old, P_new, cyl_old, cyl_new, ax, cycle):
@@ -96,7 +78,6 @@ def simulate_patient(age_start=12, P_start=-1.5, cyl=-0.50, ax=90, n_years=20):
         year = i
         P_worn_t = P_worn
         E_c = smp_E(cycle_count)
-
         s_target = P_to_sag(P_worn) or S_BASE
         q_nom = 64*D0*(s_target-S_BASE)/LENS_R**4
         D_c = E_c*TC**3/(12*(1-NU**2))
@@ -145,7 +126,6 @@ def simulate_patient(age_start=12, P_start=-1.5, cyl=-0.50, ax=90, n_years=20):
     return records
 
 def population_impact(n_patients=1000):
-    """Simulate diverse population, compute aggregate savings."""
     np.random.seed(123)
     total_savings = 0
     total_pairs_avoided = 0

@@ -1,9 +1,3 @@
-"""
-AdaptivEyes — Physics-Informed Neural Network (PINN)
-=====================================================
-Implements PINN from scratch using only numpy + manual backprop.
-Three-component loss: data fidelity + PDE residual + boundary conditions.
-"""
 import numpy as np
 import json, os
 import matplotlib
@@ -39,7 +33,6 @@ class PINN:
         self.lam_data=5.0; self.lam_pde=1.0; self.lam_bc=10.0
 
     def _fwd(self, X):
-        """Forward pass, returns (output, list_of_preactivations, list_of_activations)."""
         A=[X]; Z=[]
         for i,(W,b) in enumerate(zip(self.W,self.b)):
             z=A[-1]@W+b; Z.append(z)
@@ -54,7 +47,6 @@ class PINN:
         return a
 
     def _backprop(self, Z, A, grad_out):
-        """Given stored Z,A and output gradient, return weight/bias gradients."""
         N=A[0].shape[0]
         dA=grad_out; gW=[]; gb=[]
         for i in reversed(range(len(self.W))):
@@ -75,17 +67,11 @@ class PINN:
             self.b[i]-=self.lr*(self.mb[i]/(1-b1**self.t))/(np.sqrt(self.vb[i]/(1-b2**self.t))+eps)
 
     def pde_loss_grad(self, X_pde):
-        """
-        PDE residual: network(r,phi,...) vs Kirchhoff analytic.
-        Gradient computed via finite difference on network output.
-        """
-
         q_total = (X_pde[:,2]*1e4 +
                    X_pde[:,3]*1e4 * np.cos(2*(X_pde[:,1]*2*np.pi - X_pde[:,4]*np.pi)))
         E_vals  = X_pde[:,5]*1e9
         D_vals  = E_vals*TC**3/(12*(1-NU**2))
         r_norm  = X_pde[:,0]
-
         w_exact = (q_total*LENS_R**4/(64*D_vals))*(1-r_norm**2)**2 * 1e6
         w_pred, Z, A = self._fwd(X_pde)
         res  = w_pred.ravel() - w_exact
@@ -97,7 +83,6 @@ class PINN:
     def train(self, X_data, y_data, X_pde, X_bc, n_epochs=3000):
         history={'total':[],'data':[],'pde':[],'bc':[]}
         for ep in range(n_epochs):
-
             wd, Zd, Ad = self._fwd(X_data)
             res_d = wd - y_data
             L_d   = float(np.mean(res_d**2))
@@ -214,7 +199,6 @@ def visualize(pinn, history):
     ax3.set_title('PINN 2D deformation field\n(astigmatic)',fontweight='bold',pad=15)
 
     ax4=fig.add_subplot(gs[1,0])
-
     Xm=[]; ym=[]
     for P in np.arange(1.5,4.5,0.2):
         R=(N_IDX-1)/P; d=R**2-LENS_R**2
@@ -243,7 +227,6 @@ def visualize(pinn, history):
     ax4.set_xlabel('r/a'); ax4.set_ylabel('w (μm)')
     ax4.set_title('Extrapolation comparison\nPINN vs standard MLP',fontweight='bold')
     ax4.legend(fontsize=7.5); ax4.grid(True,alpha=0.3)
-
     errors={}
     for P in [0.8,4.9]:
         R=(N_IDX-1)/abs(P); d=R**2-LENS_R**2

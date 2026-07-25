@@ -1,6 +1,3 @@
-"""
-AdaptivEyes — Option 3: Optical Ray Tracing (corrected geometry)
-"""
 import numpy as np
 import matplotlib; matplotlib.use('Agg')
 import matplotlib.pyplot as plt, matplotlib.gridspec as gridspec
@@ -50,17 +47,10 @@ def snell(d,n_hat,n1,n2):
     return ratio*d+(ratio*cos_i-cos_t)*n_hat
 
 def trace_ray_full(px,py,P_lens,object_dist=0.5,toroidal=False,s_flat=None,s_steep=None,axis_deg=0):
-    """
-    Trace ray from point source at object_dist.
-    px,py: position in pupil plane (meters)
-    P_lens: lens power (D)
-    Returns (retinal_x, retinal_y) in microns, or None
-    """
     s=P_to_sag(P_lens) if not toroidal else (s_flat+s_steep)/2
     if s is None: return None
 
     obj=np.array([0.0,0.0,-object_dist])
-
     pupil_pt=np.array([px,py,0.0])
     d=(pupil_pt-obj); d=d/np.linalg.norm(d)
     pos=obj.copy()
@@ -78,7 +68,6 @@ def trace_ray_full(px,py,P_lens,object_dist=0.5,toroidal=False,s_flat=None,s_ste
 
     if abs(d[2])>1e-10:
         t=(TC-pos[2])/d[2]; pos=pos+t*d
-
     n_back=np.array([0.0,0.0,1.0])
     d=snell(d,n_back,N_IDX,1.0)
 
@@ -158,7 +147,6 @@ if __name__=='__main__':
             cx=np.mean(sp[:,0]); cy=np.mean(sp[:,1])
             dist=np.sqrt((sp[:,0]-cx)**2+(sp[:,1]-cy)**2)
             ax.scatter(sp[:,0]-cx,sp[:,1]-cy,c=dist,cmap='plasma',s=12,alpha=0.75,vmin=0)
-
         th=np.linspace(0,2*np.pi,100)
         ax.plot(5*np.cos(th),5*np.sin(th),'g:',lw=1.5,alpha=0.8,label='20/20 (5μm)')
         ax.plot(2*np.cos(th),2*np.sin(th),'b:',lw=1,alpha=0.5,label='Airy')

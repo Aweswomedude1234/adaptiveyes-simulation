@@ -1,21 +1,15 @@
-import sys; sys.path.insert(0,'.')
+import json, os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import numpy as np
 import matplotlib; matplotlib.use('Agg')
 import matplotlib.pyplot as plt, matplotlib.gridspec as gridspec
-import json, os
 from genetic import (sample_global_prescription_distribution, P_to_sag,
                               D0, LENS_R, TC, YIELD, S_BASE)
 
-OUT='/home/claude'
+OUT=os.path.dirname(os.path.abspath(__file__))
 print("="*60); print("AdaptivEyes — Genetic Algorithm Screw Optimizer"); print("="*60)
 
 def evaluate_batch(pop_angles_rad, sph_arr, cyl_arr, ax_arr):
-    """
-    Vectorized: evaluate all N individuals against all M prescriptions at once.
-    pop_angles_rad: (N, n_screws) in radians
-    sph_arr, cyl_arr, ax_arr: (M,) prescription arrays
-    Returns: (N,) fitness scores
-    """
     N=pop_angles_rad.shape[0]; M=len(sph_arr)
     scores=np.zeros(N)
     for m in range(M):
@@ -32,11 +26,8 @@ def evaluate_batch(pop_angles_rad, sph_arr, cyl_arr, ax_arr):
         if vm_max>=YIELD:
             scores+=50/M; continue
         sf_val=YIELD/vm_max
-
         q_sc=q_m+q_a*np.cos(2*(pop_angles_rad-phi))
-
         phi_t=np.linspace(0,2*np.pi,36,endpoint=False)
-
         diffs=pop_angles_rad[:,:,None]-phi_t[None,None,:]
         w=np.cos(diffs)**2
         w_sum=w.sum(axis=1,keepdims=True); w_sum=np.where(w_sum<1e-10,1,w_sum)
@@ -51,7 +42,6 @@ def evaluate_batch(pop_angles_rad, sph_arr, cyl_arr, ax_arr):
 def run_ga(n_screws, sph_a, cyl_a, ax_a, pop_size=40, n_gen=50, mut=0.18, elite_frac=0.15):
     np.random.seed(42)
     n_elite=max(2,int(elite_frac*pop_size))
-
     base=np.linspace(0,2*np.pi*(1-1/n_screws),n_screws)
     pop=[base]+[np.sort((base+np.random.normal(0,0.3,n_screws))%(2*np.pi)) for _ in range(pop_size//3)]
     while len(pop)<pop_size:
@@ -65,7 +55,6 @@ def run_ga(n_screws, sph_a, cyl_a, ax_a, pop_size=40, n_gen=50, mut=0.18, elite_
         idx=np.argsort(scores); pop=pop[idx]; scores=scores[idx]
         if scores[0]<best_score: best_score=scores[0]; best_cfg=pop[0].copy()
         history.append(float(scores[0]))
-
         new=[pop[i].copy() for i in range(n_elite)]
         while len(new)<pop_size:
             i1,i2=np.random.choice(min(20,pop_size),2,replace=False)
@@ -164,7 +153,6 @@ ax6.set_title('Achievable Prescription Space\n(green = covered by AdaptivEyes)',
 ax7=fig.add_subplot(gs[2,0:2])
 common=[(1.0,0.0,0),(2.0,0.0,0),(3.5,0.0,0),(4.0,0.0,0),(2.0,-0.75,90),(2.0,-1.5,45),(3.0,-1.0,90),(2.5,-0.5,0)]
 even_s_d=[i*360/opt_n for i in range(opt_n)]
-
 def eval_single(angles_deg,sph,cyl,ax_d):
     return float(evaluate_batch(np.radians([angles_deg]),np.array([sph]),np.array([cyl]),np.array([ax_d]))[0])
 s_ev=[eval_single(even_s_d,s,c,a) for (s,c,a) in common]

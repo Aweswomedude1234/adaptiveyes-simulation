@@ -13,14 +13,9 @@ YIELD =65e6
 P_APP =0.2e6
 
 def sagitta_to_radius (s ,r =R_LENS ):
-    """Radius of curvature from sagitta and aperture radius"""
     return (r **2 +s **2 )/(2 *s )
 
 def lensmaker_power (s_front ,s_back =None ,tc =None ):
-    """
-    Lensmaker's equation: P = (n-1)[1/R1 - 1/R2 + (n-1)*tc/(n*R1*R2)]
-    For plano-convex simplification used in FEA, back surface is plano (R2=inf).
-    """
     R1 =sagitta_to_radius (abs (s_front ))
     sign =1 if s_front >0 else -1
     if s_back is None :
@@ -34,7 +29,6 @@ def lensmaker_power (s_front ,s_back =None ,tc =None ):
     return P
 
 def power_to_sagitta (P_target ,r =R_LENS ):
-    """Invert: given target diopter, what sagitta do we need?"""
     if abs (P_target )<0.01 :
         return 0.001
     R =(N_IDX -1 )/abs (P_target )
@@ -46,11 +40,6 @@ def power_to_sagitta (P_target ,r =R_LENS ):
     return s if P_target >0 else -s
 
 def screw_influence_matrix (screw_angles ,r =R_LENS ):
-    """
-    Each screw at angle θ exerts a radial force on the lens rim.
-    Influence on sagitta along meridian φ approximated by cos²(θ-φ).
-    Returns matrix A where A[φ_idx, screw_idx] = influence.
-    """
     phi =np .linspace (0 ,np .pi ,180 )
     A =np .zeros ((len (phi ),len (screw_angles )))
     for j ,theta in enumerate (screw_angles ):
@@ -58,10 +47,6 @@ def screw_influence_matrix (screw_angles ,r =R_LENS ):
     return A ,phi
 
 def compute_actuation (screw_angles ,delta_sag_target ,astig_axis =None ,astig_mag =0 ):
-    """
-    Given screw positions and target sagitta change, solve for screw forces.
-    Returns: forces (N), residual error, predicted sagitta map
-    """
     A ,phi =screw_influence_matrix (screw_angles )
 
     if astig_mag >0 and astig_axis is not None :
@@ -77,16 +62,11 @@ def compute_actuation (screw_angles ,delta_sag_target ,astig_axis =None ,astig_m
     return forces ,rms_err ,predicted ,phi ,target
 
 def max_stress_estimate (force_N ,n_screws ,lens_thickness =3e-3 ):
-    """Rough Von Mises stress at rim contact from concentrated loads"""
     contact_area =np .pi *(0.5e-3 )**2 *n_screws
     stress =force_N /contact_area if contact_area >0 else 0
     return abs (stress )
 
 def find_physical_range (n_screws ,screw_angles ,E =E_NOM ,verbose =False ):
-    """
-    Sweep prescription targets, determine what's physically achievable.
-    Constraints: (1) stress < yield, (2) center thickness > TC_MIN, (3) real sagitta
-    """
     P_range =np .arange (-6.0 ,8.25 ,0.25 )
     achievable =[]
 
@@ -118,10 +98,6 @@ def find_physical_range (n_screws ,screw_angles ,E =E_NOM ,verbose =False ):
     return achievable
 
 def optimize_screw_config (max_screws =8 ,n_candidates =24 ):
-    """
-    For each N (2 to max_screws), find the angular placement that minimizes
-    RMS error across the full prescription range, weighted for astigmatism.
-    """
     candidate_angles =np .linspace (0 ,2 *np .pi ,n_candidates ,endpoint =False )
     test_prescriptions =[
     (0.5 ,0 ,0 ),(1.0 ,0 ,0 ),(2.0 ,0 ,0 ),(3.0 ,0 ,0 ),
@@ -183,10 +159,6 @@ def optimize_screw_config (max_screws =8 ,n_candidates =24 ):
     return results
 
 def fatigue_correction (cycle_count ,P_target ,screw_angles ):
-    """
-    As cycles increase, modulus decreases → more displacement for same force.
-    Compute correction factor to maintain target prescription.
-    """
 
     E_current =E_NOM -(E_NOM -E_DEG )*min (cycle_count /500 ,1.0 )
     compliance_ratio =E_NOM /E_current
@@ -220,12 +192,6 @@ def fatigue_correction (cycle_count ,P_target ,screw_angles ):
     }
 
 def prescription_to_actuation (sphere ,cylinder ,axis_deg ,n_screws ,screw_angles ,cycle_count =0 ):
-    """
-    Full pipeline: given optometric prescription → actuation map
-    sphere: diopters (float)
-    cylinder: diopters (float, negative convention)
-    axis_deg: axis of cylinder (0-180°)
-    """
 
     s_sph =power_to_sagitta (sphere )
     if s_sph is None :
@@ -323,7 +289,6 @@ if __name__ =='__main__':
     output_path =os .path .join (os .path .dirname (os .path .abspath (__file__ )),'results.json')
 
     def json_safe (o ):
-        """Convert numpy types to plain Python so json.dump doesn't crash."""
         if isinstance (o ,np .integer ):return int (o )
         if isinstance (o ,np .floating ):return float (o )
         if isinstance (o ,np .bool_ ):return bool (o )

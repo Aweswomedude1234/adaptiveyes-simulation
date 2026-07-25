@@ -1,15 +1,3 @@
-"""
-AdaptivEyes — Screw Revolution Calculator (Standalone)
-=======================================================
-INPUT:  Current prescription (sphere, cylinder, axis) for each eye
-        Target prescription (sphere, cylinder, axis) for each eye
-OUTPUT: Per-screw turns and direction diagram for each eye
-
-Usage:
-    Edit the PRESCRIPTIONS dict at the bottom, then run:
-    python screw_revolution_calculator.py
-"""
-
 import numpy as np
 import matplotlib
 matplotlib.use('Agg')
@@ -55,16 +43,6 @@ def sag_to_P(s):
 def compute_screw_plan(sph_old, cyl_old, ax_old,
                         sph_new, cyl_new, ax_new,
                         cycle=0):
-    """
-    Given current and new prescription, compute per-screw turns.
-
-    Physics:
-    - Flat meridian (at cylinder axis): q_flat drives P_flat = sph_new
-    - Steep meridian (+90°):            q_steep drives P_steep = sph_new + |cyl_new|
-    - Each screw contributes: q(θ) = q_mean + q_amp·cos(2·(θ − φ_axis))
-    - Turns from force via M2 lead-screw mechanics
-    - Delta from current prescription: only the CHANGE is applied
-    """
     E   = smp_modulus(cycle)
     D   = D_plate(E)
     a   = LENS_R
@@ -130,11 +108,6 @@ def compute_screw_plan(sph_old, cyl_old, ax_old,
     }
 
 def draw_screw_diagram(ax, plan, title):
-    """
-    Draw polar screw diagram showing turns, direction, and lens power map.
-    Green = CW (tighten = push lens out = more power)
-    Red   = CCW (loosen = pull lens flat = less power)
-    """
     ax.set_aspect('equal')
     ax.set_xlim(-1.75, 1.75)
     ax.set_ylim(-1.95, 1.75)
@@ -179,7 +152,6 @@ def draw_screw_diagram(ax, plan, title):
                 fontsize=8.5, fontweight='bold', color='white', zorder=7)
 
         if not s['no_change'] and s['turns'] > 0:
-
             arc_r   = 0.135 + 0.05*(s['turns']/max_turns)
             n_arc   = min(s['turns'], 2.5)
             arc_ang = n_arc * 2*np.pi
@@ -189,7 +161,6 @@ def draw_screw_diagram(ax, plan, title):
             arc_y = py + arc_r*np.sin(arc_t + ang + start_offset)
             ax.plot(arc_x, arc_y, color=color, lw=2.8, zorder=8,
                     solid_capstyle='round')
-
             ea = arc_ang + ang + start_offset
             sign_rot = 1 if s['direction']=='CW' else -1
             dx = -np.sin(ea)*0.015*sign_rot
@@ -235,12 +206,6 @@ def draw_screw_diagram(ax, plan, title):
                 va='center', color=col)
 
 def generate_diagram(prescriptions, output_path=None, cycle=0):
-    """
-    Main entry point.
-    prescriptions: list of dicts with keys:
-        'label', 'right_old', 'right_new', 'left_old', 'left_new'
-        each prescription is (sphere, cylinder, axis)
-    """
     n_cases = len(prescriptions)
     fig = plt.figure(figsize=(14, 6*n_cases + 1), facecolor='white')
     gs  = gridspec.GridSpec(n_cases, 2, figure=fig,

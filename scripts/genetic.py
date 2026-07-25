@@ -1,10 +1,3 @@
-"""
-AdaptivEyes — Option 4: Genetic Algorithm for Optimal Screw Placement
-=====================================================================
-Uses evolutionary optimization to find the best screw count, positions,
-and force profile for maximum prescription coverage with minimum aberration.
-Optimizes against global myopia/astigmatism population distribution.
-"""
 import numpy as np
 import matplotlib; matplotlib.use('Agg')
 import matplotlib.pyplot as plt, matplotlib.gridspec as gridspec
@@ -25,14 +18,7 @@ def sag_P(s):
     return (N_IDX-1)*np.sign(s)/((LENS_R**2+s**2)/(2*abs(s)))
 
 def sample_global_prescription_distribution(n=5000, seed=42):
-    """
-    Based on Brien Holden Institute + NEI data on global myopia distribution.
-    Sphere:   Normal(mean=-1.8, std=2.1), truncated
-    Cylinder: Half-normal(scale=0.6), negative convention
-    Axis:     Uniform(0-180)
-    """
     np.random.seed(seed)
-
     n_myope=int(0.64*n); n_hyper=n-n_myope
     sph_myope=-np.abs(np.random.normal(2.0,1.5,n_myope))
     sph_hyper= np.abs(np.random.normal(1.2,0.8,n_hyper))
@@ -45,14 +31,6 @@ def sample_global_prescription_distribution(n=5000, seed=42):
     return spheres,cyls,axes
 
 def evaluate_screw_config(screw_angles_deg, test_prescriptions):
-    """
-    Evaluate a screw configuration on a set of prescriptions.
-    Fitness = weighted sum of:
-      - Coverage fraction (achievable Rx)
-      - RMS surface accuracy across meridians
-      - Stress safety margin
-    Lower score = better.
-    """
     angles=np.radians(screw_angles_deg); n=len(angles)
     total_score=0; n_achievable=0
     for (sph,cyl,ax_d) in test_prescriptions:
@@ -62,14 +40,11 @@ def evaluate_screw_config(screw_angles_deg, test_prescriptions):
         w0_f=s_f-S_BASE; w0_s=s_s-S_BASE
         q_f=64*D0*w0_f/LENS_R**4; q_s=64*D0*w0_s/LENS_R**4
         q_m=(q_f+q_s)/2; q_a=(q_s-q_f)/2
-
         q_screws=np.array([q_m+q_a*np.cos(2*(th-phi)) for th in angles])
-
         vm_max=3*max(abs(q_f),abs(q_s))*LENS_R**2/(4*TC**2)
         if vm_max>YIELD:
             total_score+=50; continue
         sf=YIELD/vm_max if vm_max > 1 else 99.0
-
         phi_test=np.linspace(0,2*np.pi,72)
         q_achieved=np.zeros(72)
         for i,phi_t in enumerate(phi_test):
@@ -89,32 +64,25 @@ class GeneticOptimizer:
         self.mut=mutation_rate; self.elite=int(elite_frac*pop_size)
 
     def init_population(self):
-        """Initialize with evenly-spaced + random configurations."""
         pop=[]
-
         even=np.array([i*360/self.n for i in range(self.n)])
         pop.append(even)
-
         for _ in range(self.pop_size//3):
             perturb=even+np.random.normal(0,10,self.n)
             pop.append(perturb%360)
-
         while len(pop)<self.pop_size:
             angles=np.sort(np.random.uniform(0,360,self.n))
-
             diffs=np.diff(np.append(angles,angles[0]+360))
             if np.min(diffs)>15:
                 pop.append(angles)
         return np.array(pop[:self.pop_size])
 
     def crossover(self,p1,p2):
-        """Uniform crossover with angle sorting."""
         mask=np.random.rand(self.n)>0.5
         child=np.where(mask,p1,p2)
         return np.sort(child%360)
 
     def mutate(self,individual):
-        """Gaussian mutation with wraparound."""
         ind=individual.copy()
         for i in range(self.n):
             if np.random.rand()<self.mut:
@@ -126,9 +94,7 @@ class GeneticOptimizer:
         best_score=np.inf; best_config=None
         history=[]
         for gen in range(self.n_gen):
-
             scores=np.array([evaluate_screw_config(ind,test_prescriptions) for ind in pop])
-
             idx=np.argsort(scores)
             pop=pop[idx]; scores=scores[idx]
             if scores[0]<best_score:
@@ -136,10 +102,8 @@ class GeneticOptimizer:
             history.append(float(scores[0]))
             if verbose and gen%40==0:
                 print(f"    Gen {gen:3d}: best={scores[0]:.4f} mean={np.mean(scores):.4f}")
-
             new_pop=list(pop[:self.elite])
             while len(new_pop)<self.pop_size:
-
                 i1,i2=np.random.choice(min(40,len(pop)),2,replace=False)
                 parent1=pop[min(i1,i2)]
                 i3,i4=np.random.choice(min(40,len(pop)),2,replace=False)
@@ -169,9 +133,7 @@ if __name__=='__main__':
         print(f"\n  Optimizing {n_sc} screws...")
         ga=GeneticOptimizer(n_sc, pop_size=100, n_gen=150, mutation_rate=0.18)
         best_cfg,best_score,hist=ga.run(test_Rx,verbose=True)
-
         full_score=evaluate_screw_config(best_cfg,test_Rx)
-
         n_covered=0
         for (sph,cyl,ax_d) in test_Rx:
             sf=P_to_sag(sph); ss=P_to_sag(sph+abs(cyl))
@@ -235,7 +197,6 @@ if __name__=='__main__':
     ax5=fig.add_subplot(gs[1,1],projection='polar')
     opt_angles_r=np.radians(ga_results[opt_n]['angles_deg'])
     ax5.scatter(opt_angles_r,[1.0]*opt_n,s=200,color='#27AE60',zorder=5)
-
     even_r=np.radians(np.arange(opt_n)*360/opt_n)
     ax5.scatter(even_r,[0.65]*opt_n,s=150,color='gray',alpha=0.6,marker='s',zorder=4)
     for a in opt_angles_r: ax5.plot([0,a],[0,1],'g-',lw=1.5,alpha=0.6)

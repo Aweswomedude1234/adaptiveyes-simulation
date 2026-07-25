@@ -1,27 +1,11 @@
-"""
-AdaptivEyes — Honest Screw Prescription Range Analysis
-=======================================================
-Goal: 9 diopter range (e.g. -4.5D to +4.5D), myopia + hyperopia,
-      astigmatism up to 2.5D cylinder.
-
-This script computes what is ACTUALLY achievable with the SMP lens
-system and reports results honestly, including failures.
-
-Physics:
-  - Kirchhoff plate: D*∇⁴w = q  →  w0 = q*a^4 / (64D)
-  - Sagitta from target prescription: R = (n-1)/|P|,  s = R - sqrt(R²-a²)
-  - Required pressure:  q = 64*D*(s - s_base) / a^4
-  - Von Mises stress:   σ_VM = 3*|q|*a² / (4*t²)
-  - Yield limit:        σ_VM < σ_yield  →  safe
-  - For astigmatism:    two independent meridians with q_flat, q_steep
-"""
-
+import os
 import numpy as np
 import matplotlib; matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import matplotlib.gridspec as gridspec
 
+OUT     = os.path.dirname(os.path.abspath(__file__))
 E       = 2.275e9
 NU      = 0.40
 N_IDX   = 1.55
@@ -33,7 +17,6 @@ TC_vals = [0.0015, 0.002, 0.0025, 0.003]
 def D(tc): return E * tc**3 / (12*(1 - NU**2))
 
 def sag_from_P(P):
-    """Sagitta for given prescription P (diopters). Returns None if unphysical."""
     if abs(P) < 0.05:
         return float(S_BASE)
     R = (N_IDX - 1) / abs(P)
@@ -44,7 +27,6 @@ def sag_from_P(P):
     return float(s)
 
 def required_pressure(P, tc):
-    """Required uniform pressure q to achieve prescription P."""
     s = sag_from_P(P)
     if s is None:
         return None
@@ -53,7 +35,6 @@ def required_pressure(P, tc):
     return float(q)
 
 def von_mises(q, tc):
-    """Peak Von Mises stress for uniform pressure q on clamped plate."""
     return 3 * abs(q) * A**2 / (4 * tc**2)
 
 def safety_factor(q, tc):
@@ -63,7 +44,6 @@ def safety_factor(q, tc):
     return float(YIELD / vm)
 
 def achievable(P, tc):
-    """Returns (achievable: bool, reason: str, q, SF)"""
     s = sag_from_P(P)
     if s is None:
         return False, "Lens curvature exceeds aperture (unphysical geometry)", None, None
@@ -316,6 +296,7 @@ for label, val, bold in summary:
     y -= 0.075
 
 fig.suptitle('AdaptivEyes — Honest Prescription Range & Stress Analysis', fontsize=14, fontweight='bold')
-fig.savefig('/home/claude/screw_range_honest.png', dpi=150, bbox_inches='tight', facecolor='white')
+p = os.path.join(OUT, 'screw_range_honest.png')
+fig.savefig(p, dpi=150, bbox_inches='tight', facecolor='white')
 plt.close()
-print("\nSaved → /home/claude/screw_range_honest.png")
+print(f"\nSaved → {p}")

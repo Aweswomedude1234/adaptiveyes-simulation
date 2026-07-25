@@ -1,13 +1,3 @@
-"""
-AdaptivEyes — ML Model with Astigmatism
-========================================
-Trains two models:
-1. Forward model: (q_mean, q_amp, axis, E, cycle) → (P_sph, P_cyl, vm, w0_flat, w0_steep)
-2. Inverse model: (P_sph, P_cyl, axis, cycle) → (q_mean, q_amp)
-   used to find optimal pressures for any target prescription
-
-The inverse model is what the control system would use in practice.
-"""
 import numpy as np
 import json, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -20,7 +10,6 @@ from fea_astigmatism import toroidal_fea, astig_optimizer, gen_training_data, sm
 OUT = os.path.dirname(os.path.abspath(__file__))
 
 def train_forward_model(X, y):
-    """Forward: pressures → optical outcomes"""
     Xtr,Xte,ytr,yte = train_test_split(X,y,test_size=0.2,random_state=42)
     sx=StandardScaler(); sy=StandardScaler()
     Xtr_s=sx.fit_transform(Xtr); Xte_s=sx.transform(Xte)
@@ -36,12 +25,6 @@ def train_forward_model(X, y):
                       'n_train':len(Xtr),'n_test':len(Xte),'n_iter':mdl.n_iter_}
 
 def train_inverse_model(X, y):
-    """
-    Inverse: (P_sph, P_cyl, axis_norm, E, cycle) → (q_mean, q_amp)
-    X = training y columns [0,1,3,4] + axis + E + cycle (reconstructed)
-    y = training X columns [0,1] (q_mean, q_amp)
-    """
-
     X_inv = np.column_stack([y[:,0], y[:,1], X[:,2], X[:,3], X[:,4]])
     y_inv = X[:,:2]
 
@@ -61,7 +44,6 @@ def train_inverse_model(X, y):
 
 def ml_predict_screw_plan(P_sphere, P_cylinder, axis_deg, cycle,
                            inv_mdl, inv_sx, inv_sy, n_screws=5):
-    """Use inverse ML model to get optimal pressures, then convert to screw turns."""
     E_c = smp_modulus(cycle)
     X_q = np.array([[P_sphere, abs(P_cylinder), axis_deg/180.0, E_c/1e9, float(cycle)]])
     q_pred = inv_sy.inverse_transform(inv_mdl.predict(inv_sx.transform(X_q)))[0]
