@@ -2,7 +2,7 @@
 
 **Adaptiveyes: Computational Validation of a Solid-State Shape Memory Polymer (SMP) System for Variable-Focus Vision Correction**
 
-Nithilan Murugesan 
+
 
 
 
